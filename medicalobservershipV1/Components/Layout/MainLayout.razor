@@ -1,0 +1,108 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<!-- Login Modal -->
+@if (!isLoggedIn)
+{
+    <div class="modal-overlay">
+        <div class="login-modal">
+            <h2>Sign In</h2>
+            <p>Please enter your credentials to access the Medical Observership Application.</p>
+            
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="login-error">
+                    <i class="fa-solid fa-circle-exclamation"></i> @errorMessage
+                </div>
+            }
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Email Address</label>
+                <input type="email" placeholder="Enter your email" @bind="email" @bind:event="oninput" @onkeyup="HandleKeyUp" />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label>Password</label>
+                <input type="password" placeholder="Enter your password" @bind="password" @bind:event="oninput" @onkeyup="HandleKeyUp" />
+            </div>
+
+            <button class="login-btn" @onclick="HandleLogin">
+                Sign In <i class="fa-solid fa-right-to-bracket" style="margin-left: 8px;"></i>
+            </button>
+        </div>
+    </div>
+}
+
+<div class="container @(!isLoggedIn ? "blurred" : "")">
+    <aside class="sidebar">
+        <ul class="stepper">
+            <li class="step @(IsActive("/") || IsActive("/specialty") ? "active" : "")">
+                <div class="step-number">1</div>
+                <div class="step-label">Specialty</div>
+            </li>
+            <li class="step @(IsActive("/citizenship") ? "active" : "")">
+                <div class="step-number">2</div>
+                <div class="step-label">Citizenship</div>
+            </li>
+            <li class="step @(IsActive("/documents") ? "active" : "")">
+                <div class="step-number">3</div>
+                <div class="step-label">Documents</div>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        @Body
+    </main>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+@code {
+    private bool isLoggedIn = false;
+    private string email = "";
+    private string password = "";
+    private string errorMessage = "";
+
+    private const string ValidEmail = "observership.applicant@competeingoodness.org";
+    private const string ValidPassword = @"B\$,X5WKY|p";
+
+    private void HandleLogin()
+    {
+        Console.WriteLine($"Login attempt for: {email}");
+        if (email == ValidEmail && password == ValidPassword)
+        {
+            isLoggedIn = true;
+            errorMessage = "";
+        }
+        else
+        {
+            errorMessage = "Invalid email or password. Please try again.";
+        }
+    }
+
+    private void HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            HandleLogin();
+        }
+    }
+
+    private bool IsActive(string path)
+    {
+        var relativePath = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        
+        if (string.IsNullOrEmpty(relativePath))
+        {
+            return path == "/" || path == "/specialty";
+        }
+
+        var fullRelativePath = $"/{relativePath.ToLower()}";
+        return fullRelativePath == path.ToLower();
+    }
+}

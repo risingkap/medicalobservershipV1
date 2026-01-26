@@ -1,0 +1,42 @@
+@page "/documents"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+
+<PageTitle>Documents - Medical Observership</PageTitle>
+
+<div class="header-text">
+    <h1>Document Upload</h1>
+    <p>Upload the necessary documents to complete your application.</p>
+</div>
+
+<div class="form-card">
+    <div class="form-group" style="margin-bottom: 24px;">
+        <label>Upload CV / Resume (PDF)</label>
+        <div style="border: 2px dashed #e2e8f0; padding: 30px; border-radius: 12px; text-align: center; background: #f7fafc;">
+            <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: #a0aec0; margin-bottom: 10px; display: block;"></i>
+            <span style="color: #718096; font-size: 0.9rem;">Click to browse or drag and drop</span>
+            <input type="file" style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;" />
+        </div>
+    </div>
+    
+    <div class="form-group" style="margin-bottom: 32px;">
+        <label>Medical Degree Certificate</label>
+        <div style="border: 2px dashed #e2e8f0; padding: 30px; border-radius: 12px; text-align: center; background: #f7fafc;">
+            <i class="fa-solid fa-file-medical" style="font-size: 2rem; color: #a0aec0; margin-bottom: 10px; display: block;"></i>
+            <span style="color: #718096; font-size: 0.9rem;">Click to browse or drag and drop</span>
+            <input type="file" style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;" />
+        </div>
+    </div>
+
+    <div class="next-btn-container" style="justify-content: space-between;">
+        <button class="next-btn" style="background: #6c757d;" @onclick='() => NavigationManager.NavigateTo("citizenship")'>
+            <i class="fa-solid fa-chevron-left"></i> Back
+        </button>
+        <button class="next-btn" style="background: #059669;">
+            Submit Application <i class="fa-solid fa-paper-plane" style="margin-left: 5px;"></i>
+        </button>
+    </div>
+</div>
+
+@code {
+}
