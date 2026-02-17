@@ -12,19 +12,19 @@
 <div class="form-card">
     <div class="form-group" style="margin-bottom: 24px;">
         <label>Upload CV / Resume (PDF)</label>
-        <div style="border: 2px dashed #e2e8f0; padding: 30px; border-radius: 12px; text-align: center; background: #f7fafc;">
+        <div style="border: 2px dashed #e2e8f0; padding: 30px; border-radius: 12px; text-align: center; background: #f7fafc; position: relative;">
             <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: #a0aec0; margin-bottom: 10px; display: block;"></i>
-            <span style="color: #718096; font-size: 0.9rem;">Click to browse or drag and drop</span>
-            <input type="file" style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;" />
+            <span style="color: #718096; font-size: 0.9rem;">@(uploadedCv?.Name ?? "Click to browse or drag and drop")</span>
+            <InputFile OnChange="@HandleCvUpload" style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;" />
         </div>
     </div>
     
     <div class="form-group" style="margin-bottom: 32px;">
         <label>Medical Degree Certificate</label>
-        <div style="border: 2px dashed #e2e8f0; padding: 30px; border-radius: 12px; text-align: center; background: #f7fafc;">
+        <div style="border: 2px dashed #e2e8f0; padding: 30px; border-radius: 12px; text-align: center; background: #f7fafc; position: relative;">
             <i class="fa-solid fa-file-medical" style="font-size: 2rem; color: #a0aec0; margin-bottom: 10px; display: block;"></i>
-            <span style="color: #718096; font-size: 0.9rem;">Click to browse or drag and drop</span>
-            <input type="file" style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;" />
+            <span style="color: #718096; font-size: 0.9rem;">@(uploadedDegree?.Name ?? "Click to browse or drag and drop")</span>
+            <InputFile OnChange="@HandleDegreeUpload" style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;" />
         </div>
     </div>
 
@@ -39,4 +39,16 @@
 </div>
 
 @code {
+    private IBrowserFile? uploadedCv;
+    private IBrowserFile? uploadedDegree;
+
+    private void HandleCvUpload(InputFileChangeEventArgs e)
+    {
+        uploadedCv = e.File;
+    }
+
+    private void HandleDegreeUpload(InputFileChangeEventArgs e)
+    {
+        uploadedDegree = e.File;
+    }
 }
